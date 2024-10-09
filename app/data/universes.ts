@@ -56,7 +56,7 @@ export const universes: Universe[] = [
       return ({
         name: data.name,
         image: data.sprites.front_default,
-        // images: data.sprites,
+        images: data.sprites,
         main_properties: {
           height: data.height,
           weight: data.weight,

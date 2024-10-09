@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
+import CharacterImage from '~/components/Application/Character/CharacterImage.vue'
+import CharacterProperties from '~/components/Application/Character/CharacterProperties.vue'
 import { universes } from '~/data/universes'
 
 const route = useRoute()
@@ -12,23 +14,6 @@ const universe = computed(() => {
 if (universe.value) {
   const { data } = await universe.value.api(`${universe.value.characterPath}/${route.params.character}`)
   character.value = universe.value.mapCharacter(data.value)
-}
-
-function formatKey(str: string | number): string {
-  str = str.toString()
-  str = str.replace(/_/g, ' ')
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
-function unit(key: string): string {
-  switch (key) {
-    case 'height':
-      return 'cm'
-    case 'mass': case 'weight':
-      return 'kg'
-    default:
-      return ''
-  }
 }
 </script>
 
@@ -45,41 +30,18 @@ function unit(key: string): string {
           {{ character.name }}
         </h1>
         <div v-if="character" class="grid grid-cols-1 md:grid-cols-2  gap-8 m-auto lg:max-w-[80%]">
-          <div class="rounded-md  bg-gray-100 p-4 w-[20rem] h-[20rem]">
-            <img :src="character.image" :alt="character.name" class="w-full rounded-lg">
+          <div class="rounded-md bg-gray-100 p-4 w-[20rem] h-auto">
+            <CharacterImage :image="character.image" :images="character.images ?? null" />
           </div>
           <div class="grid grid-cols-1 gap-8">
             <div class="rounded-xl bg-gray-200 p-8 backdrop-blur backdrop-opacity-80">
-              <div class="grid grid-cols-2 gap-6">
-                <div v-for="(property, key) in character.main_properties" :key="key">
-                  <div class="text-lg">
-                    {{ formatKey(key) }}
-                  </div>
-                  <div class="font-bold text-xl">
-                    {{ property }} {{ unit(key.toString()) }}
-                  </div>
-                </div>
-              </div>
+              <!-- Main Properties -->
+              <CharacterProperties :properties="character.main_properties" />
             </div>
 
             <div class="rounded-xl bg-blue-100 p-8 backdrop-blur backdrop-opacity-80">
-              <div class="grid grid-cols-2 gap-6">
-                <div v-for="(property, key) in character.extra_properties" :key="key">
-                  <div class="text-lg">
-                    {{ formatKey(key) }}
-                  </div>
-                  <div class="font-bold text-xl">
-                    <span v-if=" typeof property === 'object'">
-                      <span v-for="prop, k in property" :key="k">
-                        {{ prop }}<span v-if="k !== property.length - 1">, </span>
-                      </span>
-                    </span>
-                    <span v-else>
-                      {{ property }}
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <!-- Extra Properties -->
+              <CharacterProperties :properties="character.extra_properties" />
             </div>
           </div>
         </div>
