@@ -33,5 +33,8 @@
   },
   "resolutions": {
     "@typescript-eslint/utils": "^8.6.0"
+  },
+  "dependencies": {
+    "pinia-plugin-persistedstate": "^4.1.1"
   }
 }

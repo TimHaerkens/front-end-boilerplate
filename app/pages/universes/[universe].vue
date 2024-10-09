@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import CharacterCard from '~/components/Application/CharacterCard.vue'
 import GridListToggle from '~/components/Application/GridListToggle.vue'
 import { universes } from '~/data/universes'
+import { useUserSettingsStore } from '~/stores/userSettingsStore'
 import type { Character } from '~/types/Character'
 
 const route = useRoute()
@@ -20,9 +21,8 @@ if (universe.value) {
   characters.value = universe.value.mapData(data.value)
 }
 
-const state = reactive({
-  view: 'grid',
-})
+const userSettingsStore = useUserSettingsStore()
+const viewType = computed(() => userSettingsStore.viewType)
 
 onBeforeMount(() => {
   if (!universe.value) {
@@ -44,12 +44,12 @@ onBeforeMount(() => {
               {{ universe?.name }}
             </h1>
           </div>
-          <GridListToggle v-model="state.view" />
+          <GridListToggle />
         </div>
         <div
           :class="[
-            { 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4': state.view === 'grid' },
-            { 'grid grid-cols-1 gap-2': state.view === 'list' },
+            { 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4': viewType === 'grid' },
+            { 'grid grid-cols-1 gap-2': viewType === 'list' },
           ]"
         >
           <CharacterCard v-for="character in characters" :key="character.name" :character="character" />
