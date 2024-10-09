@@ -14,8 +14,9 @@ if (universe.value) {
   character.value = universe.value.mapCharacter(data.value)
 }
 
-function capitalize(str: string | number): string {
+function formatKey(str: string | number): string {
   str = str.toString()
+  str = str.replace(/_/g, ' ')
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
@@ -52,10 +53,10 @@ function unit(key: string): string {
               <div class="grid grid-cols-2 gap-6">
                 <div v-for="(property, key) in character.main_properties" :key="key">
                   <div class="text-lg">
-                    {{ capitalize(key) }}
+                    {{ formatKey(key) }}
                   </div>
                   <div class="font-bold text-xl">
-                    {{ property }} {{ unit(key) }}
+                    {{ property }} {{ unit(key.toString()) }}
                   </div>
                 </div>
               </div>
@@ -65,18 +66,21 @@ function unit(key: string): string {
               <div class="grid grid-cols-2 gap-6">
                 <div v-for="(property, key) in character.extra_properties" :key="key">
                   <div class="text-lg">
-                    {{ capitalize(key) }}
+                    {{ formatKey(key) }}
                   </div>
                   <div class="font-bold text-xl">
-                    {{ property }}
+                    <span v-if=" typeof property === 'object'">
+                      <span v-for="prop, k in property" :key="k">
+                        {{ prop }}<span v-if="k !== property.length - 1">, </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{ property }}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div>
-            {{ character }}
           </div>
         </div>
       </div>
