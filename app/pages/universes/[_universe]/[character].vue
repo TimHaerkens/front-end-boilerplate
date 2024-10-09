@@ -27,6 +27,16 @@ if (universe.value) {
         <h1 v-if="character" class="text-4xl font-bold mb-8">
           {{ character.name }}
         </h1>
+        <div v-if="character" class="grid grid-cols-1 md:grid-cols-2 gap-8 m-auto lg:max-w-[80%]">
+          <div class="bg-gray-100 p-4 w-[20rem] h-[20rem]">
+            <img :src="character.image" :alt="character.name" class="w-full rounded-lg">
+          </div>
+          <div>
+            <p class="text-lg">
+              {{ character }}
+            </p>
+          </div>
+        </div>
       </div>
     </UContainer>
   </div>

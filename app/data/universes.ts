@@ -25,9 +25,14 @@ export const universes: Universe[] = [
       url: `/universes/rickmorty/${character.id}`,
     })),
     mapCharacter: (data: any) => {
-      return ({ name: data.name, image: data.image, url: `/universes/rickmorty/${data.id}` })
+      return ({
+        name: data.name,
+        image: data.image,
+        alive: data.status === 'Alive',
+        species: data.species,
+        gender: data.gender,
+      })
     },
-
   },
   {
     name: 'Pokemon',
@@ -42,7 +47,12 @@ export const universes: Universe[] = [
       url: `/universes/pokemon/${pokemon.url.split('/')[6]}`,
     })),
     mapCharacter: (data: any) => {
-      return ({ name: data.name, image: null, url: `/universes/pokemon/${data.id}` })
+      return ({
+        name: data.name,
+        image: data.sprites.front_default,
+        images: data.sprites,
+        types: data.types.map((type: any) => type.type.name),
+      })
     },
   },
   {
@@ -58,7 +68,17 @@ export const universes: Universe[] = [
       url: `/universes/starwars/${character.url.split('/')[5]}`,
     })),
     mapCharacter: (data: any) => {
-      return ({ name: data.name, image: null, url: `/universes/starwars/${data.id + 1}` })
+      return ({
+        name: data.name,
+        image: null,
+        gender: data.gender,
+        height: data.height,
+        mass: data.mass,
+        hair_color: data.hair_color,
+        skin_color: data.skin_color,
+        eye_color: data.eye_color,
+        birth_year: data.birth_year,
+      })
     },
   },
 ]
