@@ -74,6 +74,9 @@ export default defineNuxtConfig({
       rickAndMorty: {
         url: 'https://rickandmortyapi.com/api',
       },
+      starwars: {
+        url: 'https://swapi.dev/api/',
+      },
     },
   },
 })

@@ -6,7 +6,12 @@
   <div class="py-8">
     <UContainer>
       <div class="container mx-auto">
-        <h1 class="text-4xl font-bold mb-8 text-center">
+        <p>
+          <NuxtLink to="/">
+            Back to universes
+          </NuxtLink>
+        </p>
+        <h1 class="text-4xl font-bold my-8 text-center">
           We couldn't find the universe you were looking for.
         </h1>
       </div>
