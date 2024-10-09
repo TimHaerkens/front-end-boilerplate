@@ -28,9 +28,15 @@ export const universes: Universe[] = [
       return ({
         name: data.name,
         image: data.image,
-        alive: data.status === 'Alive',
-        species: data.species,
-        gender: data.gender,
+        main_properties: {
+          status: data.status,
+          gender: data.gender,
+          species: data.species,
+        },
+        extra_properties: {
+          origin: data.origin.name,
+          location: data.location.name,
+        },
       })
     },
   },
@@ -50,8 +56,14 @@ export const universes: Universe[] = [
       return ({
         name: data.name,
         image: data.sprites.front_default,
-        images: data.sprites,
-        types: data.types.map((type: any) => type.type.name),
+        // images: data.sprites,
+        main_properties: {
+          height: data.height,
+          weight: data.weight,
+        },
+        extra_properties: {
+          types: data.types.map((type: any) => type.type.name),
+        },
       })
     },
   },
@@ -71,13 +83,17 @@ export const universes: Universe[] = [
       return ({
         name: data.name,
         image: null,
-        gender: data.gender,
-        height: data.height,
-        mass: data.mass,
-        hair_color: data.hair_color,
-        skin_color: data.skin_color,
-        eye_color: data.eye_color,
-        birth_year: data.birth_year,
+        main_properties: {
+          gender: data.gender,
+          height: data.height,
+          weight: data.mass,
+        },
+        extra_properties: {
+          hair_color: data.hair_color,
+          skin_color: data.skin_color,
+          eye_color: data.eye_color,
+          birth_year: data.birth_year,
+        },
       })
     },
   },

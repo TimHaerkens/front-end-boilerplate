@@ -13,6 +13,22 @@ if (universe.value) {
   const { data } = await universe.value.api(`${universe.value.characterPath}/${route.params.character}`)
   character.value = universe.value.mapCharacter(data.value)
 }
+
+function capitalize(str: string | number): string {
+  str = str.toString()
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+function unit(key: string): string {
+  switch (key) {
+    case 'height':
+      return 'cm'
+    case 'mass': case 'weight':
+      return 'kg'
+    default:
+      return ''
+  }
+}
 </script>
 
 <template>
@@ -27,14 +43,40 @@ if (universe.value) {
         <h1 v-if="character" class="text-4xl font-bold mb-8">
           {{ character.name }}
         </h1>
-        <div v-if="character" class="grid grid-cols-1 md:grid-cols-2 gap-8 m-auto lg:max-w-[80%]">
-          <div class="bg-gray-100 p-4 w-[20rem] h-[20rem]">
+        <div v-if="character" class="grid grid-cols-1 md:grid-cols-2  gap-8 m-auto lg:max-w-[80%]">
+          <div class="rounded-md  bg-gray-100 p-4 w-[20rem] h-[20rem]">
             <img :src="character.image" :alt="character.name" class="w-full rounded-lg">
           </div>
+          <div class="grid grid-cols-1 gap-8">
+            <div class="rounded-xl bg-gray-200 p-8 backdrop-blur backdrop-opacity-80">
+              <div class="grid grid-cols-2 gap-6">
+                <div v-for="(property, key) in character.main_properties" :key="key">
+                  <div class="text-lg">
+                    {{ capitalize(key) }}
+                  </div>
+                  <div class="font-bold text-xl">
+                    {{ property }} {{ unit(key) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-xl bg-blue-100 p-8 backdrop-blur backdrop-opacity-80">
+              <div class="grid grid-cols-2 gap-6">
+                <div v-for="(property, key) in character.extra_properties" :key="key">
+                  <div class="text-lg">
+                    {{ capitalize(key) }}
+                  </div>
+                  <div class="font-bold text-xl">
+                    {{ property }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div>
-            <p class="text-lg">
-              {{ character }}
-            </p>
+            {{ character }}
           </div>
         </div>
       </div>
