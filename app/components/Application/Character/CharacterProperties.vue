@@ -1,13 +1,9 @@
 <script setup lang="ts">
+import { formatKey } from '~/utils/formatKey'
+
 defineProps<{
   properties: Record<string, any> // The properties object (either main or extra)
 }>()
-
-function formatKey(str: string | number): string {
-  str = str.toString()
-  str = str.replace(/_/g, ' ')
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
 
 function unit(key: string): string {
   switch (key) {

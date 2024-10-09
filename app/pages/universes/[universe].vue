@@ -2,6 +2,7 @@
 import { computed, onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import CharacterCard from '~/components/Application/CharacterCard.vue'
+import GridListToggle from '~/components/Application/GridListToggle.vue'
 import { universes } from '~/data/universes'
 import type { Character } from '~/types/Character'
 
@@ -19,6 +20,10 @@ if (universe.value) {
   characters.value = universe.value.mapData(data.value)
 }
 
+const state = reactive({
+  view: 'grid',
+})
+
 onBeforeMount(() => {
   if (!universe.value) {
     router.push('/universes/404')
@@ -30,15 +35,23 @@ onBeforeMount(() => {
   <div class="py-8">
     <UContainer>
       <div class="container mx-auto">
-        <p>
-          <NuxtLink to="/">
-            Back to universes
-          </NuxtLink>
-        </p>
-        <h1 class="text-4xl font-bold mb-8">
-          {{ universe?.name }}
-        </h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="flex flex-row justify-between">
+          <div class="flex flex-col">
+            <NuxtLink to="/">
+              Back to universes
+            </NuxtLink>
+            <h1 class="text-4xl font-bold mb-8">
+              {{ universe?.name }}
+            </h1>
+          </div>
+          <GridListToggle v-model="state.view" />
+        </div>
+        <div
+          :class="[
+            { 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4': state.view === 'grid' },
+            { 'grid grid-cols-1 gap-2': state.view === 'list' },
+          ]"
+        >
           <CharacterCard v-for="character in characters" :key="character.name" :character="character" />
         </div>
       </div>
