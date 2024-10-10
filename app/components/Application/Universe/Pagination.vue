@@ -32,7 +32,9 @@ function nextPage() {
 <template>
   <div class="flex justify-end space-x-4">
     <button
+      :disabled="modelValue === 1"
       class="px-4 py-2 border rounded-md bg-white"
+      :class="{ 'opacity-50': modelValue === 1 }"
       @click="emit('update:modelValue', 1)"
     >
       First
@@ -62,7 +64,9 @@ function nextPage() {
       Next
     </button>
     <button
+      :disabled="modelValue === pages"
       class="px-4 py-2 border rounded-md bg-white"
+      :class="{ 'opacity-50': modelValue === pages }"
       @click="emit('update:modelValue', pages)"
     >
       Last
