@@ -7,6 +7,8 @@ export interface Universe {
   image?: string
   api?: any
   characterPath?: string
+  pagination?: (page: number) => string
+  pages?: (data: any) => number
   mapData?: (data: any) => any
   mapCharacter?: (data: any) => any
 }
@@ -19,6 +21,8 @@ export const universes: Universe[] = [
     image: '/images/rickmorty.jpg',
     api: useRickAndMortyData,
     characterPath: 'character',
+    pagination: (page: number) => `?page=${page}`,
+    pages: (data: any) => data.info.pages,
     mapData: (data: any) => data.results.map((character: any) => ({
       name: character.name,
       image: character.image,
@@ -47,6 +51,8 @@ export const universes: Universe[] = [
     image: '/images/pokemon.jpg',
     api: usePokemonData,
     characterPath: 'pokemon',
+    pagination: (page: number) => `?offset=${(page - 1) * 20}&limit=20`,
+    pages: (data: any) => Math.ceil(data.count / 20),
     mapData: (data: any) => data.results.map((pokemon: any) => ({
       name: formatKey(pokemon.name),
       image: null,
@@ -74,6 +80,8 @@ export const universes: Universe[] = [
     image: '/images/starwars.jpg',
     api: useStarwarsData,
     characterPath: 'people',
+    pagination: (page: number) => `?page=${page}`,
+    pages: (data: any) => Math.ceil(data.count / 10),
     mapData: (data: any) => data.results.map((character: any) => ({
       name: character.name,
       image: null,

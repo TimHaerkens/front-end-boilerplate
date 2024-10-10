@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import CharacterCard from '~/components/Application/CharacterCard.vue'
-import GridListToggle from '~/components/Application/GridListToggle.vue'
+import CharacterCard from '~/components/Application/Universe/CharacterCard.vue'
+import GridListToggle from '~/components/Application/Universe/GridListToggle.vue'
+import Pagination from '~/components/Application/Universe/Pagination.vue'
 import { universes } from '~/data/universes'
 import { useUserSettingsStore } from '~/stores/userSettingsStore'
 import type { Character } from '~/types/Character'
@@ -10,15 +11,25 @@ import type { Character } from '~/types/Character'
 const route = useRoute()
 const router = useRouter()
 
+const state = reactive({
+  currentPage: 1,
+  pages: 1,
+})
+
 const characters = ref<Character[]>([])
 
 const universe = computed(() => {
   return universes.find(universe => universe.route === `universes/${route.params.universe}`)
 })
 
+async function loadCharacters() {
+  const { data } = await universe.value?.api(`${universe.value.characterPath}${universe.value.pagination(state.currentPage)}`)
+  state.pages = universe.value?.pages(data.value) ?? 1
+  characters.value = universe.value?.mapData(data.value) ?? []
+}
+
 if (universe.value) {
-  const { data } = await universe.value.api(universe.value.characterPath)
-  characters.value = universe.value.mapData(data.value)
+  loadCharacters()
 }
 
 const userSettingsStore = useUserSettingsStore()
@@ -28,6 +39,10 @@ onBeforeMount(() => {
   if (!universe.value) {
     router.push('/universes/404')
   }
+})
+
+watchEffect(() => {
+  loadCharacters()
 })
 </script>
 
@@ -45,6 +60,9 @@ onBeforeMount(() => {
             </h1>
           </div>
           <GridListToggle />
+        </div>
+        <div class="w-full mb-8">
+          <Pagination v-model="state.currentPage" :pages="state.pages" />
         </div>
         <div
           :class="[
