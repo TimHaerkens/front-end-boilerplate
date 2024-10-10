@@ -61,6 +61,9 @@ watchEffect(() => {
           </div>
           <GridListToggle />
         </div>
+        <div class="w-full mb-8">
+          <Pagination v-model="state.currentPage" :pages="state.pages" />
+        </div>
         <div
           :class="[
             { 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4': viewType === 'grid' },
@@ -68,9 +71,6 @@ watchEffect(() => {
           ]"
         >
           <CharacterCard v-for="character in characters" :key="character.name" :character="character" />
-        </div>
-        <div class="w-full align-center mt-8">
-          <Pagination v-model="state.currentPage" :pages="state.pages" />
         </div>
       </div>
     </UContainer>
