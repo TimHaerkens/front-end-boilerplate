@@ -3,17 +3,29 @@ import { useRoute } from 'vue-router'
 import CharacterImage from '~/components/Application/Character/CharacterImage.vue'
 import CharacterProperties from '~/components/Application/Character/CharacterProperties.vue'
 import { universes } from '~/data/universes'
+import type { Universe } from '~/types/Universe'
 
 const route = useRoute()
 const character = ref<any | null>(null)
 
-const universe = computed(() => {
+const universe = computed<Universe | null>(() => {
   return universes.find(universe => universe.route === `universes/${route.params._universe}`) ?? null
 })
 
-if (universe.value) {
-  const { data } = await universe.value.api(`${universe.value.characterPath}/${route.params.character}`)
-  character.value = universe.value.mapCharacter(data.value)
+watchEffect(() => {
+  if (universe.value) {
+    fetchCharacter(universe.value)
+  }
+})
+
+async function fetchCharacter(universe: Universe) {
+  if (!universe) {
+    return
+  }
+  const data = await universe.fetch(`${universe.characterPath}/${route.params.character}`)
+  if (data) {
+    character.value = universe.mapCharacter(data)
+  }
 }
 </script>
 
@@ -22,7 +34,7 @@ if (universe.value) {
     <UContainer>
       <div class="container mx-auto">
         <p>
-          <NuxtLink :to="`/${universe?.route}`">
+          <NuxtLink :to="`/${universe?.route}`" class="back-link">
             Back to {{ universe?.name }}
           </NuxtLink>
         </p>

@@ -7,6 +7,7 @@ describe('characterCard.vue', () => {
     const wrapper = await mountSuspended(CharacterCard, {
       props: {
         character: {
+          id: 1,
           name: 'Rick Sanchez',
           image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
           url: '/universes/rickmorty/1',

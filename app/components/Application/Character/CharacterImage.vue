@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  image: string
+  image: string | null
   images: object | null
 }>()
 
@@ -17,7 +17,10 @@ const filteredImages = computed(() => {
 </script>
 
 <template>
-  <img :src="selectedImage" class="w-full rounded-lg">
+  <img v-if="image !== null" :src="selectedImage" class="w-full rounded-lg">
+  <div v-else class="text-center">
+    <p>No image available</p>
+  </div>
   <div v-if="images !== null" class="grid grid-cols-4 gap-4 mt-4">
     <div v-for="img in filteredImages" :key="img" class="rounded-lg cursor-pointer hover:border-2 hover:border-blue-200" :class="[{ 'border-2 border-blue-300': selectedImage === img }]">
       <img
