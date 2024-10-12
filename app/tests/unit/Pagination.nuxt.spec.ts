@@ -1,6 +1,5 @@
-// @vitest-environment nuxt
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 import Pagination from '~/components/Application/Universe/Pagination.vue'
 

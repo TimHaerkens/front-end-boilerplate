@@ -7,7 +7,7 @@ import { universes } from '~/data/universes'
   <div class="py-8">
     <UContainer>
       <header class="mb-8 py-2">
-        <h1 class="uppercase text-center text-3xl">
+        <h1 class="home-title uppercase text-center text-3xl">
           Welcome to Placeholder
         </h1>
         <p class="text-center">

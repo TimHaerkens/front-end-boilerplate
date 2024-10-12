@@ -15,6 +15,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@playwright/test": "^1.48.0",
     "happy-dom": "^15.7.4",
     "pinia-plugin-persistedstate": "^4.1.1"
   },
@@ -36,7 +37,6 @@
     "nuxt": "^3.13.2",
     "nuxt-api-party": "^2.0.10",
     "pinia": "^2.2.4",
-    "playwright-core": "^1.48.0",
     "typescript": "^5.6.2",
     "vitest": "^2.1.2",
     "vue-tsc": "^2.1.6"
