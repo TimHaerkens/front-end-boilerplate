@@ -23,13 +23,9 @@ const universe = computed(() => {
 })
 
 async function loadCharacters() {
-  const { data } = await universe.value?.api(`${universe.value.characterPath}${universe.value.pagination(state.currentPage)}`)
-  state.pages = universe.value?.pages(data.value) ?? 1
-  characters.value = universe.value?.mapData(data.value) ?? []
-}
-
-if (universe.value) {
-  loadCharacters()
+  const data = await universe.value?.fetch(`${universe.value.characterPath}${universe.value.pagination(state.currentPage)}`)
+  state.pages = universe.value?.pages(data) ?? 1
+  characters.value = universe.value?.mapData(data) ?? []
 }
 
 const userSettingsStore = useUserSettingsStore()
@@ -52,7 +48,7 @@ watchEffect(() => {
       <div class="container mx-auto">
         <div class="flex flex-row justify-between">
           <div class="flex flex-col">
-            <NuxtLink to="/">
+            <NuxtLink to="/" class="back-link">
               Back to universes
             </NuxtLink>
             <h1 class="text-4xl font-bold mb-8">
@@ -70,7 +66,7 @@ watchEffect(() => {
             { 'grid grid-cols-1 gap-2': viewType === 'list' },
           ]"
         >
-          <CharacterCard v-for="character in characters" :key="character.name" :character="character" />
+          <CharacterCard v-for="character in characters" :key="character.id" :character="character" />
         </div>
       </div>
     </UContainer>

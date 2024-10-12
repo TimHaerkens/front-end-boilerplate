@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     'nuxt-api-party',
     '@nuxt/content',
     'pinia-plugin-persistedstate/nuxt',
+    '@nuxt/test-utils/module',
   ],
 
   experimental: {
