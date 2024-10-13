@@ -20,7 +20,7 @@ useHead({
         </p>
       </header>
 
-      <div class="mb-8 w-fit m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="mb-8 md:w-fit m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <UniverseCard
           v-for="universe in universes"
           :key="universe.name"

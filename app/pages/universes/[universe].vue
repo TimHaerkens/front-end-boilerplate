@@ -15,6 +15,7 @@ const router = useRouter()
 const state = reactive({
   currentPage: 1,
   pages: 1,
+  loading: false,
 })
 
 const characters = ref<Character[]>([])
@@ -24,9 +25,11 @@ const universe = computed(() => {
 })
 
 async function loadCharacters() {
+  state.loading = true
   const data = await universe.value?.fetch(`${universe.value.characterPath}${universe.value.pagination(state.currentPage)}`)
   state.pages = universe.value?.pages(data) ?? 1
   characters.value = universe.value?.mapData(data) ?? []
+  state.loading = false
 }
 
 const userSettingsStore = useUserSettingsStore()
@@ -67,7 +70,7 @@ watchEffect(() => {
             { 'grid grid-cols-1 gap-2': viewType === 'list' },
           ]"
         >
-          <LoadingPlaceholder v-if="characters.length === 0" width="10rem" />
+          <CharacterCard v-for="n in (state.loading ? 10 : 0)" :key="n" :character="null" :view-type="viewType" />
           <CharacterCard v-for="character in characters" :key="character.id" :character="character" :view-type="viewType" />
         </div>
       </div>
