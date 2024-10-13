@@ -49,7 +49,7 @@ export const universes: Universe[] = [
     mapData: (data: any) => data.results.map((pokemon: any) => ({
       id: pokemon.url.split('/')[6],
       name: formatKey(pokemon.name),
-      image: null,
+      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`,
       url: `/universes/pokemon/${pokemon.url.split('/')[6]}`,
     })),
     mapCharacter: (data: any) => {

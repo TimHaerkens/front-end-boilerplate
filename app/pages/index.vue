@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import UniverseCard from '~/components/Application/UniverseCard.vue'
+import { useHead } from '@vueuse/head'
+import UniverseCard from '~/components/Application/Universe/UniverseCard.vue'
 import { universes } from '~/data/universes'
+
+useHead({
+  title: 'Browse your favorite characters - Pro DB',
+})
 </script>
 
 <template>
   <div class="py-8">
     <UContainer>
-      <header class="mb-8 py-2">
+      <header class="mb-8 py-8 bg-slate-200">
         <h1 class="home-title uppercase text-center text-3xl">
-          Welcome to Placeholder
+          Welcome to Pro DB
         </h1>
         <p class="text-center">
           On this website you can find your favorite characters from <strong>{{ universes.length }}</strong> different universes.

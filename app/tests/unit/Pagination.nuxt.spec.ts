@@ -1,7 +1,7 @@
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
-import Pagination from '~/components/Application/Universe/Pagination.vue'
+import Pagination from '~/components/Application/Base/Pagination.vue'
 
 describe('pagination.vue', () => {
   it('emits the correct event when the next button is clicked', async () => {

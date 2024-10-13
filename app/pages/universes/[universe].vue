@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import CharacterCard from '~/components/Application/Universe/CharacterCard.vue'
-import GridListToggle from '~/components/Application/Universe/GridListToggle.vue'
-import Pagination from '~/components/Application/Universe/Pagination.vue'
+import GridListToggle from '~/components/Application/Base/GridListToggle.vue'
+import LoadingPlaceholder from '~/components/Application/Base/LoadingPlaceholder.vue'
+import Pagination from '~/components/Application/Base/Pagination.vue'
+import CharacterCard from '~/components/Application/Character/CharacterCard.vue'
 import { universes } from '~/data/universes'
 import { useUserSettingsStore } from '~/stores/userSettingsStore'
 import type { Character } from '~/types/Character'
@@ -62,11 +63,12 @@ watchEffect(() => {
         </div>
         <div
           :class="[
-            { 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4': viewType === 'grid' },
+            { 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4': viewType === 'grid' },
             { 'grid grid-cols-1 gap-2': viewType === 'list' },
           ]"
         >
-          <CharacterCard v-for="character in characters" :key="character.id" :character="character" />
+          <LoadingPlaceholder v-if="characters.length === 0" width="10rem" />
+          <CharacterCard v-for="character in characters" :key="character.id" :character="character" :view-type="viewType" />
         </div>
       </div>
     </UContainer>
