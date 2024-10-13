@@ -14,7 +14,7 @@ defineProps<Props>()
     <div
       class="cursor-pointer p-4 border hover:bg-gray-100 transition ease-in-out hover:-translate-y-2"
       :class="[
-        { 'rounded-lg shadow-md w-56 h-56 flex flex-col gap-2': viewType === 'grid' },
+        { 'rounded-lg shadow-md md:w-56 md:h-56 flex flex-col gap-2': viewType === 'grid' },
         { 'w-full flex flex-row gap-4': viewType === 'list' },
       ]"
     >
@@ -22,7 +22,7 @@ defineProps<Props>()
         :src="character.image ?? '/images/avatar.png'"
         alt="Character image"
         :class="[
-          { 'm-auto rounded-lg w-40 h-40': viewType === 'grid' },
+          { 'm-auto rounded-lg w-24 h-24  md:w-40 md:h-40': viewType === 'grid' },
           { 'w-24 h-24 ': viewType === 'list' },
           { 'opacity-30': character.image === null },
         ]"

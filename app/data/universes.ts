@@ -1,6 +1,9 @@
 import type { Character, CharacterData } from '~/types/Character'
 import type { Universe } from '~/types/Universe'
 
+const feetToCm = (feet: number) => Math.round(100 * feet * 30.48) / 100
+const ouncesToKg = (ounces: number) => Math.round(100 * ounces * 0.0283495) / 100
+
 export const universes: Universe[] = [
   {
     name: 'Rick & Morty',
@@ -55,16 +58,24 @@ export const universes: Universe[] = [
     mapCharacter: (data: any) => {
       return ({
         id: data.id,
-        name: formatKey(data.name),
+        name: `${formatKey(data.name)} - #${data.id} `,
         image: data.sprites.front_default,
-        images: data.sprites,
+        images: [
+          { name: 'default', src: data.sprites.front_default },
+          // ...Object.entries(data.sprites).map(([name, src]) => ({ name, src })).filter(img => img.src !== null && typeof img.src === 'string'),
+          ...Object.entries(data.sprites.other).map(([key, value]) => Object.entries(value).map(([name, src]) => ({ name: key, type: name, src })).filter(img => img.src !== null && img.type.includes('front_default'))).flat(),
+
+        ],
         universe: 'pokemon',
         main_properties: {
-          height: data.height,
-          weight: data.weight,
+          height: feetToCm(data.height),
+          weight: ouncesToKg(data.weight),
+          types: data.types.map((type: any) => type.type.name),
         },
         extra_properties: {
-          types: data.types.map((type: any) => type.type.name),
+          abilities: data.abilities.map((ability: any) => ability.ability.name),
+          base_experience: data.base_experience,
+          ...data.stats.map((stat: any) => ({ [stat.stat.name]: stat.base_stat })).reduce((acc: object, val: string) => ({ ...acc, ...val }), {}),
         },
       })
     },

@@ -42,7 +42,7 @@ async function fetchCharacter(universe: Universe) {
           {{ character.name }}
         </h1>
         <div v-if="character" class="grid grid-cols-1 md:grid-cols-2  gap-8 m-auto lg:max-w-[80%]">
-          <div class="rounded-md bg-gray-100 p-4 w-[20rem] h-auto">
+          <div class="rounded-md bg-gray-100 p-4 w-[20rem] lg:w-full h-auto">
             <CharacterImage :image="character.image" :images="character.images ?? null" />
           </div>
           <div class="grid grid-cols-1 gap-8">
