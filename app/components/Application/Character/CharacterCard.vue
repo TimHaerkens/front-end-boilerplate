@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Character } from '~/types/Character'
+import type { ViewType } from '~/types/ViewType'
 import LoadingPlaceholder from '../Base/LoadingPlaceholder.vue'
 
 interface Props {
-  viewType: 'list' | 'grid'
+  viewType: ViewType
   character: Character | null
 }
 
@@ -11,7 +12,11 @@ defineProps<Props>()
 </script>
 
 <template>
-  <LoadingPlaceholder v-if="!character" width="14rem" height="14rem" />
+  <LoadingPlaceholder
+    v-if="!character"
+    :width="viewType === 'grid' ? '14rem' : '7rem'"
+    :height="viewType === 'grid' ? '14rem' : '7rem'"
+  />
   <NuxtLink v-else :to="character.url">
     <div
       class="cursor-pointer p-4 border hover:bg-gray-100 transition ease-in-out hover:-translate-y-2"

@@ -1,3 +1,4 @@
+/* eslint-disable node/prefer-global/process */
 import { pwa } from './app/config/pwa'
 import { appDescription } from './app/constants/index'
 
@@ -79,6 +80,12 @@ export default defineNuxtConfig({
       starwars: {
         url: 'https://swapi.dev/api/',
       },
+    },
+  },
+  runtimeConfig: {
+    public: {
+      appName: process.env.APP_NAME,
+      githubUrl: process.env.GIT_REPOSITORY,
     },
   },
 })

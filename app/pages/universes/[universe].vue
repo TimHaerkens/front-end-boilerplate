@@ -2,7 +2,6 @@
 import { computed, onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import GridListToggle from '~/components/Application/Base/GridListToggle.vue'
-import LoadingPlaceholder from '~/components/Application/Base/LoadingPlaceholder.vue'
 import Pagination from '~/components/Application/Base/Pagination.vue'
 import CharacterCard from '~/components/Application/Character/CharacterCard.vue'
 import { universes } from '~/data/universes'
@@ -71,7 +70,7 @@ watchEffect(() => {
           ]"
         >
           <CharacterCard v-for="n in (state.loading ? 10 : 0)" :key="n" :character="null" :view-type="viewType" />
-          <CharacterCard v-for="character in characters" :key="character.id" :character="character" :view-type="viewType" />
+          <CharacterCard v-for="character in (!state.loading ? characters : 0)" :key="character.id" :character="character" :view-type="viewType" />
         </div>
       </div>
     </UContainer>
