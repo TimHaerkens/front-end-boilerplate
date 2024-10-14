@@ -49,7 +49,7 @@ function nextPage() {
     </button>
     <button
       v-for="page in computedPages" :key="page"
-      class="px-4 py-2 border rounded-md bg-gray-200 w-[4rem]"
+      class="px-4 py-2 border rounded-md bg-white w-[4rem]"
       :class="{ '!bg-blue-500 text-white': modelValue === page }"
       @click="emit('update:modelValue', page)"
     >

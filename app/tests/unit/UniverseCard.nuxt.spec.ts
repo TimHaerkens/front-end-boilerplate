@@ -1,7 +1,7 @@
 // @vitest-environment nuxt
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
-import UniverseCard from '~/components/Application/UniverseCard.vue'
+import UniverseCard from '~/components/Application/Universe/UniverseCard.vue'
 
 describe('universeCard.vue', () => {
   it('renders the universe card with correct name and description', async () => {

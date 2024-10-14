@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
+import LoadingPlaceholder from '~/components/Application/Base/LoadingPlaceholder.vue'
 import CharacterImage from '~/components/Application/Character/CharacterImage.vue'
 import CharacterProperties from '~/components/Application/Character/CharacterProperties.vue'
 import { universes } from '~/data/universes'
@@ -7,6 +8,10 @@ import type { Universe } from '~/types/Universe'
 
 const route = useRoute()
 const character = ref<any | null>(null)
+
+const state = reactive({
+  loading: false,
+})
 
 const universe = computed<Universe | null>(() => {
   return universes.find(universe => universe.route === `universes/${route.params._universe}`) ?? null
@@ -19,6 +24,7 @@ watchEffect(() => {
 })
 
 async function fetchCharacter(universe: Universe) {
+  state.loading = true
   if (!universe) {
     return
   }
@@ -26,6 +32,7 @@ async function fetchCharacter(universe: Universe) {
   if (data) {
     character.value = universe.mapCharacter(data)
   }
+  state.loading = false
 }
 </script>
 
@@ -38,22 +45,26 @@ async function fetchCharacter(universe: Universe) {
             Back to {{ universe?.name }}
           </NuxtLink>
         </p>
-        <h1 v-if="character" class="text-4xl font-bold mb-8">
+        <LoadingPlaceholder v-if="state.loading" width="14rem" class="mb-8" />
+        <h1 v-else-if="character" class="text-4xl font-bold mb-8">
           {{ character.name }}
         </h1>
-        <div v-if="character" class="grid grid-cols-1 md:grid-cols-2  gap-8 m-auto lg:max-w-[80%]">
-          <div class="rounded-md bg-gray-100 p-4 w-[20rem] h-auto">
-            <CharacterImage :image="character.image" :images="character.images ?? null" />
+        <div class="grid grid-cols-1 md:grid-cols-2  gap-8 m-auto lg:max-w-[80%]">
+          <div class="rounded-md bg-gray-100 p-4 w-[20rem] lg:w-full h-auto">
+            <LoadingPlaceholder v-if="state.loading" width="14rem" height="14rem" class="m-auto" />
+            <CharacterImage v-else-if="character" :image="character.image" :images="character.images ?? null" />
           </div>
           <div class="grid grid-cols-1 gap-8">
             <div class="rounded-xl bg-gray-200 p-8 backdrop-blur backdrop-opacity-80">
               <!-- Main Properties -->
-              <CharacterProperties :properties="character.main_properties" />
+              <LoadingPlaceholder v-if="state.loading" width="14rem" />
+              <CharacterProperties v-else-if="character" :properties="character.main_properties" />
             </div>
 
             <div class="rounded-xl bg-blue-100 p-8 backdrop-blur backdrop-opacity-80">
               <!-- Extra Properties -->
-              <CharacterProperties :properties="character.extra_properties" />
+              <LoadingPlaceholder v-if="state.loading" width="14rem" />
+              <CharacterProperties v-else-if="character" :properties="character.extra_properties" />
             </div>
           </div>
         </div>
