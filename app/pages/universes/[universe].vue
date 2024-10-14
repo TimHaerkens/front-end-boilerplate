@@ -2,7 +2,6 @@
 import { computed, onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import GridListToggle from '~/components/Application/Base/GridListToggle.vue'
-import LoadingPlaceholder from '~/components/Application/Base/LoadingPlaceholder.vue'
 import Pagination from '~/components/Application/Base/Pagination.vue'
 import CharacterCard from '~/components/Application/Character/CharacterCard.vue'
 import { universes } from '~/data/universes'

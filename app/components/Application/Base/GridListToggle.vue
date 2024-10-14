@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useUserSettingsStore } from '~/stores/userSettingsStore'
+import type { ViewType } from '~/types/ViewType'
 
 const userSettingsStore = useUserSettingsStore()
 const viewType = computed(() => userSettingsStore.viewType)
 
-function toggleView(view: 'grid' | 'list') {
+function toggleView(view: ViewType) {
   userSettingsStore.setViewType(view)
 }
 </script>

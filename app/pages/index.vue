@@ -3,6 +3,9 @@ import { useHead } from '@vueuse/head'
 import UniverseCard from '~/components/Application/Universe/UniverseCard.vue'
 import { universes } from '~/data/universes'
 
+const config = useRuntimeConfig()
+const appTitle = config.public.appName || 'App'
+
 useHead({
   title: 'Browse your favorite characters - Pro DB',
 })
@@ -13,7 +16,7 @@ useHead({
     <UContainer>
       <header class="mb-8 py-8 bg-slate-200">
         <h1 class="home-title uppercase text-center text-3xl">
-          Welcome to Pro DB
+          Welcome to {{ appTitle }}
         </h1>
         <p class="text-center">
           On this website you can find your favorite characters from <strong>{{ universes.length }}</strong> different universes.
@@ -24,10 +27,7 @@ useHead({
         <UniverseCard
           v-for="universe in universes"
           :key="universe.name"
-          :name="universe.name"
-          :description="universe.description"
-          :route="universe.route"
-          :image="universe.image"
+          :universe="universe"
         />
       </div>
     </UContainer>

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Character } from '~/types/Character'
+import type { ViewType } from '~/types/ViewType'
 import LoadingPlaceholder from '../Base/LoadingPlaceholder.vue'
 
 interface Props {
-  viewType: 'list' | 'grid'
+  viewType: ViewType
   character: Character | null
 }
 
