@@ -38,6 +38,21 @@ cd front-end-boilerplate
 yarn
 ```
 
+### Environment Setup
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Configure the environment variables as necessary. For the assignment purposes the variables are filled with "Pro DB" and my Github repo url.
+
+```bash
+APP_NAME="Pro DB"
+GIT_REPOSITORY="https://github.com/TimHaerkens/front-end-boilerplate"
+```
+
 ### Running the Project
 
 To start the development server:
@@ -98,7 +113,7 @@ Update the data/universes.ts file with the new universe data:
     name: 'Universe name',
     description: 'Description characters',
     route: 'universes/starwars',
-    image: '/images/starwars.jpg',
+    image: '/images/logos/starwars.jpg',
     api: useUniverseData, // use{name like in apiParty}Data
     fetch: $universe, // ${name like in apiParty}
     characterPath: 'characters', // character endpoint
