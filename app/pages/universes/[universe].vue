@@ -70,7 +70,7 @@ watchEffect(() => {
           ]"
         >
           <CharacterCard v-for="n in (state.loading ? 10 : 0)" :key="n" :character="null" :view-type="viewType" />
-          <CharacterCard v-for="character in characters" :key="character.id" :character="character" :view-type="viewType" />
+          <CharacterCard v-for="character in (!state.loading ? characters : 0)" :key="character.id" :character="character" :view-type="viewType" />
         </div>
       </div>
     </UContainer>
